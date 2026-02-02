@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "wrangler pages dev ./dist",
+    "deploy": "wrangler pages deploy ./dist --project-name=paolocattani-me",
     "astro": "astro"
   },
   "dependencies": {
