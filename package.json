@@ -1,12 +1,13 @@
 {
-  "name": "minor-moon",
+  "name": "me",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "wrangler pages dev ./dist",
-    "deploy": "wrangler pages deploy ./dist --project-name=me",
+    "cf-typegen": "wrangler types",
+    "deploy": "wrangler deploy",
     "astro": "astro"
   },
   "dependencies": {
