@@ -7,6 +7,17 @@ compatibility_flags = ["nodejs_compat"]
 [assets]
 directory = "./dist"
 
+# Custom domains - preserve paolocattani.me routing (was overridden by deploy)
+[[routes]]
+pattern = "www.paolocattani.me"
+custom_domain = true
+[[routes]]
+pattern = "paolocattani.me"
+custom_domain = true
+
+# Match previous remote config: custom domains only, no workers.dev
+workers_dev = false
+
 # R2 bucket for blog posts - create the bucket in Cloudflare Dashboard first
 # Dashboard → R2 → Create bucket → name it e.g. "paolocattani-blog"
 [[r2_buckets]]
