@@ -1,8 +1,8 @@
 ---
 export const prerender = false;
 
-import Layout from "../../layouts/Layout.astro";
 import matter from "gray-matter";
+import Layout from "../../layouts/Layout.astro";
 
 interface PostMeta {
   slug: string;
@@ -16,8 +16,8 @@ const POSTS_PREFIX = "posts/";
 let posts: PostMeta[] = [];
 
 try {
-  const { env } = Astro.locals.runtime ?? {};
-  const bucket = env?.BLOG_BUCKET;
+  const runtime = (Astro.locals as { runtime?: { env?: Env } }).runtime;
+  const bucket = runtime?.env?.BLOG_BUCKET;
 
   if (bucket) {
     const listed = await bucket.list({ prefix: POSTS_PREFIX });
@@ -25,8 +25,8 @@ try {
 
     const postPromises = objects.map(async (obj) => {
       const r2Object = await bucket.get(obj.key);
-      if (!r2Object?.body) return null;
-      const text = await r2Object.body.text();
+      if (!r2Object) return null;
+      const text = await r2Object.text();
       const { data } = matter(text);
       const slug = obj.key.replace(POSTS_PREFIX, "").replace(/\.md$/, "");
       return {

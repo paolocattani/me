@@ -1,9 +1,9 @@
 ---
 export const prerender = false;
 
-import Layout from "../../layouts/Layout.astro";
 import matter from "gray-matter";
 import { marked } from "marked";
+import Layout from "../../layouts/Layout.astro";
 
 const POSTS_PREFIX = "posts/";
 
@@ -16,13 +16,13 @@ let description: string | undefined;
 let date: string | undefined;
 
 try {
-  const { env } = Astro.locals.runtime ?? {};
-  const bucket = env?.BLOG_BUCKET;
+  const runtime = (Astro.locals as { runtime?: { env?: Env } }).runtime;
+  const bucket = runtime?.env?.BLOG_BUCKET; 
 
   if (bucket) {
     const r2Object = await bucket.get(key);
-    if (r2Object?.body) {
-      const text = await r2Object.body.text();
+    if (r2Object) {
+      const text = await r2Object.text();
       const { data, content: body } = matter(text);
       title = (data.title as string) ?? slug;
       description = data.description as string | undefined;
