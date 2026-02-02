@@ -1,10 +1,11 @@
 # wrangler.toml
 name = 'me'
-compatibility_date = "2025-10-08"
+compatibility_date = "2026-01-20"
 compatibility_flags = ["nodejs_compat"]
 
-# Required for Pages deploy - specifies the build output directory
-pages_build_output_dir = "./dist"
+# Workers deployment - static assets from Astro build output
+[assets]
+directory = "./dist"
 
 # R2 bucket for blog posts - create the bucket in Cloudflare Dashboard first
 # Dashboard → R2 → Create bucket → name it e.g. "paolocattani-blog"
