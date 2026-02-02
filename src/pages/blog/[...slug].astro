@@ -1,0 +1,73 @@
+---
+export const prerender = false;
+
+import Layout from "../../layouts/Layout.astro";
+import matter from "gray-matter";
+import { marked } from "marked";
+
+const POSTS_PREFIX = "posts/";
+
+const slug = Astro.params.slug ?? "";
+const key = `${POSTS_PREFIX}${slug}.md`;
+
+let content: string | null = null;
+let title = slug;
+let description: string | undefined;
+let date: string | undefined;
+
+try {
+  const { env } = Astro.locals.runtime ?? {};
+  const bucket = env?.BLOG_BUCKET;
+
+  if (bucket) {
+    const r2Object = await bucket.get(key);
+    if (r2Object?.body) {
+      const text = await r2Object.body.text();
+      const { data, content: body } = matter(text);
+      title = (data.title as string) ?? slug;
+      description = data.description as string | undefined;
+      date = data.date as string | undefined;
+      content = marked(body) as string;
+    }
+  }
+} catch (err) {
+  console.error("Failed to load blog post:", err);
+}
+
+if (!content) {
+  return Astro.redirect("/blog");
+}
+---
+
+<Layout title={`${title} | Paolo Cattani`} description={description ?? title}>
+  <article class="container mx-auto px-6 py-24 max-w-3xl">
+    <header class="mb-12">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4">
+        <span class="bg-gradient-to-r from-rose-500 via-emerald-400 to-violet-500 bg-clip-text text-transparent">
+          {title}
+        </span>
+      </h1>
+      {date && (
+        <time class="text-slate-500" datetime={date}>
+          {new Date(date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </time>
+      )}
+    </header>
+    <div
+      class="prose prose-invert prose-slate max-w-none prose-headings:text-white prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline prose-strong:text-white prose-code:text-emerald-400 prose-code:bg-slate-800 prose-code:px-1 prose-code:rounded prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-800"
+      set:html={content}
+    />
+    <footer class="mt-16 pt-8 border-t border-slate-800">
+      <a
+        href="/blog"
+        class="text-emerald-400 hover:text-emerald-300 transition-colors"
+      >
+        ← Back to blog
+      </a>
+    </footer>
+  </article>
+</Layout>

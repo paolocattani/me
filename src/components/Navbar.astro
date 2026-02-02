@@ -1,0 +1,64 @@
+---
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#projects", label: "Projects" },
+  { href: "/blog", label: "Blog" },
+  { href: "/#skills", label: "Skills" },
+  { href: "/#contact", label: "Contact" },
+];
+const currentPath = Astro.url.pathname;
+const currentHash = Astro.url.hash ?? "";
+
+function isActive(item: { href: string }): boolean {
+  if (item.href === "/blog") {
+    return currentPath.startsWith("/blog");
+  }
+  if (item.href === "/") {
+    return currentPath === "/" && currentHash === "";
+  }
+  return currentPath === "/" && currentHash === item.href.replace("/", "");
+}
+---
+<header class="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/50">
+  <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="/" class="font-display font-bold text-xl tracking-tight">
+      <span class="text-emerald-400">
+        Paolo Cattani
+      </span>
+    </a>
+    <ul class="flex items-center gap-8">
+      {navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class:list={[
+              "text-sm font-medium transition-colors hover:text-emerald-400",
+              isActive(item) ? "text-emerald-400" : "text-slate-400",
+            ]}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+<script>
+  function updateActiveNav() {
+    const hash = window.location.hash || "";
+    document.querySelectorAll("nav a[href^='/']").forEach((link) => {
+      const href = link.getAttribute("href") ?? "";
+      const isBlog = href === "/blog";
+      const isHome = href === "/";
+      const isActive =
+        (isBlog && window.location.pathname.startsWith("/blog")) ||
+        (isHome && hash === "") ||
+        (href === `/${hash}` && hash !== "");
+      link.classList.toggle("text-emerald-400", isActive);
+      link.classList.toggle("text-slate-400", !isActive);
+    });
+  }
+  updateActiveNav();
+  window.addEventListener("hashchange", updateActiveNav);
+</script>
