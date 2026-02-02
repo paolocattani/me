@@ -2,6 +2,7 @@
 name = 'me'
 compatibility_date = "2026-01-20"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = false
 
 # Workers deployment - static assets from Astro build output
 [assets]
@@ -11,12 +12,11 @@ directory = "./dist"
 [[routes]]
 pattern = "www.paolocattani.me"
 custom_domain = true
+zone_name = "paolocattani.me"
 [[routes]]
 pattern = "paolocattani.me"
 custom_domain = true
-
-# Match previous remote config: custom domains only, no workers.dev
-workers_dev = false
+zone_name = "paolocattani.me"
 
 # R2 bucket for blog posts - create the bucket in Cloudflare Dashboard first
 # Dashboard → R2 → Create bucket → name it e.g. "paolocattani-blog"
