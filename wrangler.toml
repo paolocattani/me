@@ -1,4 +1,5 @@
-name = "paolocattani-me"
+# wrangler.toml
+name = 'me'
 compatibility_date = "2025-02-02"
 compatibility_flags = ["nodejs_compat"]
 
