@@ -1,24 +1,31 @@
 ---
 import Navbar from "../components/Navbar.astro";
+import { t, type Locale } from "../i18n";
 import "../styles/global.css";
 
 interface Props {
   title: string;
   description?: string;
+  locale: Locale;
 }
 
-const { title, description = "Paolo Cattani - Software Engineer & Tech Lead" } = Astro.props;
+const { title, description, locale } = Astro.props;
+const defaultDescription = t(locale, "layout.defaultDescription");
+const metaDescription = description ?? defaultDescription;
+const footerCopyright = t(locale, "layout.footerCopyright", {
+  year: new Date().getFullYear(),
+});
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="{description}" />
-    <meta name="generator" content="{Astro.generator}" />
+    <meta name="description" content={metaDescription} />
+    <meta name="generator" content={Astro.generator} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -28,7 +35,7 @@ const { title, description = "Paolo Cattani - Software Engineer & Tech Lead" } =
     <title>{title}</title>
   </head>
   <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
-    <Navbar />
+    <Navbar locale={locale} />
     <main class="relative">
       <slot />
     </main>
@@ -37,7 +44,7 @@ const { title, description = "Paolo Cattani - Software Engineer & Tech Lead" } =
         class="container mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4"
       >
         <p class="text-slate-500 text-sm">
-          © {new Date().getFullYear()} Paolo Cattani
+          {footerCopyright}
         </p>
         <div class="flex gap-6">
           <a
@@ -45,15 +52,15 @@ const { title, description = "Paolo Cattani - Software Engineer & Tech Lead" } =
             target="_blank"
             rel="noopener noreferrer"
             class="text-slate-400 hover:text-emerald-400 transition-colors"
-            aria-label="LinkedIn"
+            aria-label={t(locale, "layout.linkedIn")}
           >
-            LinkedIn
+            {t(locale, "layout.linkedIn")}
           </a>
           <a
             href="mailto:paolocattani0501@gmail.com"
             class="text-slate-400 hover:text-emerald-400 transition-colors"
           >
-            Email
+            {t(locale, "layout.email")}
           </a>
         </div>
       </div>

@@ -1,0 +1,136 @@
+{
+  "layout": {
+    "defaultDescription": "Paolo Cattani - Software Engineer & Tech Lead",
+    "footerCopyright": "© {year} Paolo Cattani",
+    "linkedIn": "LinkedIn",
+    "email": "Email"
+  },
+  "nav": {
+    "home": "Home",
+    "experience": "Experience",
+    "projects": "Projects",
+    "blog": "Blog",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "home": {
+    "metaTitle": "Paolo Cattani | Software Engineer & Tech Lead",
+    "metaDescription": "Experienced Software Engineer and Tech Lead building scalable ERP systems for food distribution. NestJS, React, Kubernetes, AWS.",
+    "subtitle": "Software Engineer & Tech Lead",
+    "greeting": "Hi, I'm",
+    "name": "Paolo Cattani",
+    "tagline": "Building scalable ERP systems for large-scale food distribution.",
+    "techStack": "NestJS · React · Kubernetes · AWS",
+    "downloadCv": "Download CV",
+    "getInTouch": "Get in touch"
+  },
+  "experience": {
+    "title": "Experience",
+    "intro": "Over 10 years building software systems—from ERP integrations to distributed platforms.",
+    "jobs": [
+      {
+        "company": "GTN SPA",
+        "role": "Tech Lead",
+        "period": "Nov 2023 — Today",
+        "location": "Udine",
+        "description": "Craft an ERP solution for large-scale food distribution and build the development team from scratch.",
+        "tech": "SOA on k8s, NestJS, gRPC, HTTP, RabbitMQ, React, Redux, RTK, RTK Query, AWS",
+        "color": "from-rose-500/20 to-rose-500/5 border-rose-500/30"
+      },
+      {
+        "company": "Tecma Solutions SPA",
+        "role": "Tech Lead",
+        "period": "Apr 2020 — Nov 2023",
+        "location": "Milan",
+        "description": "Coordinate 3 development teams, 1 QA team, and 1 infrastructure team. Ensure high-quality standards across the company's SAAS platform.",
+        "tech": "Microservices on k8s, Gitlab CI/CD, Node.js, GraphQL, NestJS, React, Redux, TDD, BDD, DDD",
+        "color": "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30"
+      },
+      {
+        "company": "EBS Consulting",
+        "role": "Software Engineer",
+        "period": "Sep 2019 — Apr 2020",
+        "location": "Padua",
+        "description": "Enterprise platform for charging stations. Distributed payment system with asynchronous jobs on Quartz and SQL.",
+        "tech": "Java EE, JBoss, Quarkus",
+        "color": "from-violet-500/20 to-violet-500/5 border-violet-500/30"
+      },
+      {
+        "company": "Sanmarco Informatica",
+        "role": "Software Developer & Consultant",
+        "period": "Jun 2015 — Aug 2019",
+        "location": "Padua",
+        "description": "Specialized solutions for customers on top of the company's ERP. Integration with semi-autonomous warehouse from receiving to delivery.",
+        "tech": "SOAP services, picking and packing",
+        "color": "from-amber-500/20 to-amber-500/5 border-amber-500/30"
+      }
+    ]
+  },
+  "projects": {
+    "title": "Projects",
+    "intro": "Building systems that scale—from backend to infrastructure.",
+    "items": [
+      {
+        "name": "Giova ERP",
+        "description": "Full-stack ERP for large-scale food distribution. JWT multitenancy, event-driven architecture, AI assistant with RAG.",
+        "gradient": "from-emerald-500/30 to-emerald-500/10",
+        "highlights": [
+          "NestJS API (gRPC, HTTP, RabbitMQ)",
+          "React + Redux (RTK, RTK Query, Sagas)",
+          "WebSocket notifications (Socket.IO)",
+          "Schema-per-tenant or DB-per-tenant",
+          "Kubernetes + AWS deployment",
+          "AI Assistant (Ollama/Bedrock, RAG)",
+          "C# reporting, Playwright E2E"
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "title": "Skills",
+    "intro": "Technologies and practices I work with daily.",
+    "groups": [
+      {
+        "title": "Backend",
+        "items": ["Node.js", "NestJS", "TypeScript", "Java", "GraphQL", "gRPC", "RabbitMQ"],
+        "color": "rose"
+      },
+      {
+        "title": "Frontend",
+        "items": ["React", "Redux", "RTK Query", "Redux Sagas"],
+        "color": "emerald"
+      },
+      {
+        "title": "Cloud & DevOps",
+        "items": ["Kubernetes", "AWS", "GitLab CI/CD", "Ansible", "Jenkins", "Docker"],
+        "color": "violet"
+      },
+      {
+        "title": "Practices",
+        "items": ["TDD", "BDD", "DDD", "Microservices", "SOA", "Event-driven"],
+        "color": "amber"
+      }
+    ]
+  },
+  "contact": {
+    "title": "Get in touch",
+    "intro": "Have a project in mind? Drop me a message—I'd love to hear from you.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Your message...",
+    "submit": "Send message"
+  },
+  "blog": {
+    "metaTitle": "Blog | Paolo Cattani",
+    "metaDescription": "Blog posts by Paolo Cattani - Software Engineer & Tech Lead.",
+    "title": "Blog",
+    "intro": "Thoughts on software, architecture, and building systems that scale.",
+    "backToBlog": "← Back to blog",
+    "noPosts": "No posts yet.",
+    "noPostsHintPrefix": "Upload Markdown files to your R2 bucket under",
+    "noPostsHintSuffix": " to see them here."
+  }
+}

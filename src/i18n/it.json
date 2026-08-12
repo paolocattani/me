@@ -1,0 +1,136 @@
+{
+  "layout": {
+    "defaultDescription": "Paolo Cattani - Ingegnere del software e Tech Lead",
+    "footerCopyright": "© {year} Paolo Cattani",
+    "linkedIn": "LinkedIn",
+    "email": "Email"
+  },
+  "nav": {
+    "home": "Home",
+    "experience": "Esperienza",
+    "projects": "Progetti",
+    "blog": "Blog",
+    "skills": "Competenze",
+    "contact": "Contatti"
+  },
+  "home": {
+    "metaTitle": "Paolo Cattani | Ingegnere del software e Tech Lead",
+    "metaDescription": "Ingegnere del software e Tech Lead con esperienza nella realizzazione di sistemi ERP scalabili per la distribuzione alimentare. NestJS, React, Kubernetes, AWS.",
+    "subtitle": "Ingegnere del software e Tech Lead",
+    "greeting": "Ciao, sono",
+    "name": "Paolo Cattani",
+    "tagline": "Sistemi ERP scalabili per la distribuzione alimentare su larga scala.",
+    "techStack": "NestJS · React · Kubernetes · AWS",
+    "downloadCv": "Scarica CV",
+    "getInTouch": "Contattami"
+  },
+  "experience": {
+    "title": "Esperienza",
+    "intro": "Oltre 10 anni a costruire sistemi software—dalle integrazioni ERP alle piattaforme distribuite.",
+    "jobs": [
+      {
+        "company": "GTN SPA",
+        "role": "Tech Lead",
+        "period": "Nov 2023 — Oggi",
+        "location": "Udine",
+        "description": "Progettazione di una soluzione ERP per la distribuzione alimentare su larga scala e creazione del team di sviluppo da zero.",
+        "tech": "SOA su k8s, NestJS, gRPC, HTTP, RabbitMQ, React, Redux, RTK, RTK Query, AWS",
+        "color": "from-rose-500/20 to-rose-500/5 border-rose-500/30"
+      },
+      {
+        "company": "Tecma Solutions SPA",
+        "role": "Tech Lead",
+        "period": "Apr 2020 — Nov 2023",
+        "location": "Milano",
+        "description": "Coordinamento di 3 team di sviluppo, 1 team QA e 1 team infrastruttura. Garantire standard di qualità sulla piattaforma SAAS aziendale.",
+        "tech": "Microservizi su k8s, Gitlab CI/CD, Node.js, GraphQL, NestJS, React, Redux, TDD, BDD, DDD",
+        "color": "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30"
+      },
+      {
+        "company": "EBS Consulting",
+        "role": "Software Engineer",
+        "period": "Set 2019 — Apr 2020",
+        "location": "Padova",
+        "description": "Piattaforma enterprise per colonnine di ricarica. Sistema di pagamento distribuito con job asincroni su Quartz e SQL.",
+        "tech": "Java EE, JBoss, Quarkus",
+        "color": "from-violet-500/20 to-violet-500/5 border-violet-500/30"
+      },
+      {
+        "company": "Sanmarco Informatica",
+        "role": "Software Developer & Consultant",
+        "period": "Giu 2015 — Ago 2019",
+        "location": "Padova",
+        "description": "Soluzioni specializzate per i clienti sul prodotto ERP aziendale. Integrazione con magazzino semi-autonomo dalla ricezione alla spedizione.",
+        "tech": "Servizi SOAP, picking e packing",
+        "color": "from-amber-500/20 to-amber-500/5 border-amber-500/30"
+      }
+    ]
+  },
+  "projects": {
+    "title": "Progetti",
+    "intro": "Sistemi che scalano—dal backend all'infrastruttura.",
+    "items": [
+      {
+        "name": "Giova ERP",
+        "description": "ERP full-stack per la distribuzione alimentare su larga scala. Multitenancy JWT, architettura event-driven, assistente AI con RAG.",
+        "gradient": "from-emerald-500/30 to-emerald-500/10",
+        "highlights": [
+          "API NestJS (gRPC, HTTP, RabbitMQ)",
+          "React + Redux (RTK, RTK Query, Sagas)",
+          "Notifiche WebSocket (Socket.IO)",
+          "Schema-per-tenant o DB-per-tenant",
+          "Deploy Kubernetes + AWS",
+          "Assistente AI (Ollama/Bedrock, RAG)",
+          "Reporting C#, E2E Playwright"
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "title": "Competenze",
+    "intro": "Tecnologie e pratiche con cui lavoro ogni giorno.",
+    "groups": [
+      {
+        "title": "Backend",
+        "items": ["Node.js", "NestJS", "TypeScript", "Java", "GraphQL", "gRPC", "RabbitMQ"],
+        "color": "rose"
+      },
+      {
+        "title": "Frontend",
+        "items": ["React", "Redux", "RTK Query", "Redux Sagas"],
+        "color": "emerald"
+      },
+      {
+        "title": "Cloud & DevOps",
+        "items": ["Kubernetes", "AWS", "GitLab CI/CD", "Ansible", "Jenkins", "Docker"],
+        "color": "violet"
+      },
+      {
+        "title": "Pratiche",
+        "items": ["TDD", "BDD", "DDD", "Microservizi", "SOA", "Event-driven"],
+        "color": "amber"
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contattami",
+    "intro": "Hai un progetto in mente? Scrivimi—mi piacerebbe sentirti.",
+    "nameLabel": "Nome",
+    "namePlaceholder": "Il tuo nome",
+    "emailLabel": "Email",
+    "emailPlaceholder": "tu@esempio.com",
+    "messageLabel": "Messaggio",
+    "messagePlaceholder": "Il tuo messaggio...",
+    "submit": "Invia messaggio"
+  },
+  "blog": {
+    "metaTitle": "Blog | Paolo Cattani",
+    "metaDescription": "Articoli di Paolo Cattani - Ingegnere del software e Tech Lead.",
+    "title": "Blog",
+    "intro": "Pensieri su software, architettura e sistemi che scalano.",
+    "backToBlog": "← Torna al blog",
+    "noPosts": "Nessun articolo ancora.",
+    "noPostsHintPrefix": "Carica file Markdown nel bucket R2 nella cartella",
+    "noPostsHintSuffix": " per vederli qui."
+  }
+}

@@ -1,28 +1,51 @@
 ---
-const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/#experience", label: "Experience" },
-  { href: "/#projects", label: "Projects" },
-  { href: "/blog", label: "Blog" },
-  { href: "/#skills", label: "Skills" },
-  { href: "/#contact", label: "Contact" },
-];
-const currentPath = Astro.url.pathname;
-const currentHash = Astro.url.hash ?? "";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { t, type Locale, SUPPORTED_LOCALES } from "../i18n";
 
-function isActive(item: { href: string }): boolean {
-  if (item.href === "/blog") {
-    return currentPath.startsWith("/blog");
-  }
-  if (item.href === "/") {
-    return currentPath === "/" && currentHash === "";
-  }
-  return currentPath === "/" && currentHash === item.href.replace("/", "");
+interface Props {
+  locale: Locale;
 }
+
+const { locale } = Astro.props;
+
+const navItems = [
+  { path: "", hash: "", key: "nav.home" },
+  { path: "", hash: "experience", key: "nav.experience" },
+  { path: "", hash: "projects", key: "nav.projects" },
+  { path: "blog", hash: "", key: "nav.blog" },
+  { path: "", hash: "skills", key: "nav.skills" },
+  { path: "", hash: "contact", key: "nav.contact" },
+] as const;
+
+function buildHref(loc: Locale, path: string, hash: string): string {
+  const base = getRelativeLocaleUrl(loc, path as "en" | "it");
+  const normalized = base.endsWith("/") && base.length > 1 ? base.slice(0, -1) : base;
+  return hash ? `${normalized}#${hash}` : normalized;
+}
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const currentHash = Astro.url.hash?.replace("#", "") ?? "";
+
+function isActive(item: (typeof navItems)[number]): boolean {
+  const itemHref = buildHref(locale, item.path, item.hash);
+  const currentHref = `${currentPath}${currentHash ? `#${currentHash}` : ""}`;
+  if (item.path === "blog") {
+    return currentPath === itemHref.split("#")[0];
+  }
+  return itemHref === currentHref;
+}
+
+const otherLocales = SUPPORTED_LOCALES.filter((l) => l !== locale);
+
+/** Current logical path without locale prefix (e.g. "" or "blog" or "blog/slug") */
+const pathWithoutLocale = currentPath
+  .replace(new RegExp(`^/${locale}/?`), "/")
+  .replace(/^\/?/, "") || "";
 ---
+
 <header class="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/50">
   <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="/" class="font-display font-bold text-xl tracking-tight">
+    <a href={buildHref(locale, "", "")} class="font-display font-bold text-xl tracking-tight">
       <span class="text-emerald-400">
         Paolo Cattani
       </span>
@@ -31,30 +54,45 @@ function isActive(item: { href: string }): boolean {
       {navItems.map((item) => (
         <li>
           <a
-            href={item.href}
+            href={buildHref(locale, item.path, item.hash)}
             class:list={[
               "text-sm font-medium transition-colors hover:text-emerald-400",
               isActive(item) ? "text-emerald-400" : "text-slate-400",
             ]}
           >
-            {item.label}
+            {t(locale, item.key)}
           </a>
         </li>
       ))}
+      <li class="flex items-center gap-2 border-l border-slate-700 pl-6">
+        {otherLocales.map((other) => (
+          <a
+            href={buildHref(other, pathWithoutLocale, currentHash)}
+            class="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors uppercase"
+            aria-label={other === "it" ? "Passa a Italiano" : "Switch to English"}
+          >
+            {other}
+          </a>
+        ))}
+      </li>
     </ul>
   </nav>
 </header>
-<script>
+<script define:vars={{ locale }}>
   function updateActiveNav() {
-    const hash = window.location.hash || "";
+    const pathname = window.location.pathname;
+    const hash = (window.location.hash || "").replace("#", "");
     document.querySelectorAll("nav a[href^='/']").forEach((link) => {
       const href = link.getAttribute("href") ?? "";
-      const isBlog = href === "/blog";
-      const isHome = href === "/";
+      if (href.startsWith("http") || href.startsWith("mailto:")) return;
+      const [pathPart, hashPart] = href.split("#");
+      const path = pathPart.endsWith("/") && pathPart.length > 1 ? pathPart.slice(0, -1) : pathPart;
+      const isBlog = path === "/blog" || path === `/${locale}/blog`;
+      const isHome = path === "/" || path === `/${locale}`;
       const isActive =
-        (isBlog && window.location.pathname.startsWith("/blog")) ||
-        (isHome && hash === "") ||
-        (href === `/${hash}` && hash !== "");
+        (isBlog && pathname.startsWith(path)) ||
+        (isHome && pathname === path && !hash) ||
+        (pathname === path && (hashPart || "") === hash);
       link.classList.toggle("text-emerald-400", isActive);
       link.classList.toggle("text-slate-400", !isActive);
     });
