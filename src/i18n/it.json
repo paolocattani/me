@@ -71,6 +71,23 @@
     "intro": "Sistemi che scalano—dal backend all'infrastruttura.",
     "items": [
       {
+        "name": "Vital",
+        "description": "App salute personale: diario, estrazione da PDF di laboratorio e visite, timeline dei biomarcatori e condivisione opzionale con i clinici—nata per uso personale, in soft launch pubblico.",
+        "url": "https://health.paolocattani.me",
+        "urlLabel": "Apri Vital",
+        "gradient": "from-teal-500/30 to-teal-500/10",
+        "highlights": [
+          "SPA React + Vite su Cloudflare Pages",
+          "API Hono su Cloudflare Workers + D1",
+          "Storage R2 per PDF medici",
+          "Estrazione Gemini Vision (lab e visite)",
+          "Dashboard e timeline biomarcatori",
+          "Diario privato con segnali di sentiment",
+          "Condivisione con il medico (email / magic link)",
+          "i18n EN/IT, CI/CD con Wrangler"
+        ]
+      },
+      {
         "name": "Giova ERP",
         "description": "ERP full-stack per la distribuzione alimentare su larga scala. Multitenancy JWT, architettura event-driven, assistente AI con RAG.",
         "gradient": "from-emerald-500/30 to-emerald-500/10",

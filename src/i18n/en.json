@@ -71,6 +71,23 @@
     "intro": "Building systems that scale—from backend to infrastructure.",
     "items": [
       {
+        "name": "Vital",
+        "description": "Personal health app: journal entries, lab and specialist PDF extraction, biomarker timelines, and optional clinician sharing—built for my own use, soft-launching publicly.",
+        "url": "https://health.paolocattani.me",
+        "urlLabel": "Visit Vital",
+        "gradient": "from-teal-500/30 to-teal-500/10",
+        "highlights": [
+          "React + Vite SPA on Cloudflare Pages",
+          "Hono API on Cloudflare Workers + D1",
+          "R2 storage for medical PDFs",
+          "Gemini Vision extraction (labs & visits)",
+          "Biomarker dashboard and timeline",
+          "Private journal with sentiment signals",
+          "Doctor sharing (email / magic link)",
+          "EN/IT i18n, CI/CD with Wrangler"
+        ]
+      },
+      {
         "name": "Giova ERP",
         "description": "Full-stack ERP for large-scale food distribution. JWT multitenancy, event-driven architecture, AI assistant with RAG.",
         "gradient": "from-emerald-500/30 to-emerald-500/10",

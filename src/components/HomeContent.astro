@@ -16,6 +16,8 @@ interface Project {
   description: string;
   gradient: string;
   highlights: string[];
+  url?: string;
+  urlLabel?: string;
 }
 
 interface SkillGroup {
@@ -154,7 +156,19 @@ const colorMap: Record<string, string> = {
           class={`absolute -top-24 -right-24 w-96 h-96 rounded-full bg-gradient-to-br blur-3xl opacity-20 ${project.gradient}`}
         />
         <div class="relative">
-          <h3 class="text-3xl font-bold mb-4">{project.name}</h3>
+          <div class="flex flex-wrap items-baseline justify-between gap-3 mb-4">
+            <h3 class="text-3xl font-bold">{project.name}</h3>
+            {project.url && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-emerald-400 hover:text-emerald-300 font-medium transition-colors"
+              >
+                {project.urlLabel ?? project.url}
+              </a>
+            )}
+          </div>
           <p class="text-slate-400 text-lg mb-8">{project.description}</p>
           <ul class="grid sm:grid-cols-2 gap-3">
             {project.highlights.map((item) => (
