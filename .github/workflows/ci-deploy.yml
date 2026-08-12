@@ -50,6 +50,8 @@ jobs:
           name: dist
           path: dist
           if-no-files-found: error
+          # Keep dist/.assetsignore so Wrangler does not treat _worker.js as a public asset
+          include-hidden-files: true
 
   deploy:
     name: Deploy Worker (me)

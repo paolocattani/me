@@ -26,6 +26,8 @@ Configure in the GitHub repo:
 
 Also create a GitHub Environment named `production` (deploy job uses it), and ensure the R2 bucket `paolocattani-blog` exists.
 
+Wrangler needs `main = "./dist/_worker.js/index.js"` plus `public/.assetsignore` (`_worker.js`, `_routes.json`) so the Worker entry is not uploaded as a static asset. CI uploads the `dist` artifact with `include-hidden-files: true` so `.assetsignore` survives.
+
 ## Blog (R2)
 
 Blog posts are stored in **Cloudflare R2** and fetched at runtime—no rebuild when adding posts.

@@ -1,14 +1,18 @@
 # wrangler.toml
-name = 'me'
+name = "me"
 compatibility_date = "2026-01-20"
 compatibility_flags = ["nodejs_compat"]
 workers_dev = false
 
-# Workers deployment - static assets from Astro build output
+# Astro Cloudflare adapter entry (SSR routes e.g. blog + R2)
+main = "./dist/_worker.js/index.js"
+
+# Static assets from Astro build; `.assetsignore` excludes `_worker.js` / `_routes.json`
 [assets]
 directory = "./dist"
+binding = "ASSETS"
 
-# Custom domains - preserve paolocattani.me routing (was overridden by deploy)
+# Custom domains
 [[routes]]
 pattern = "www.paolocattani.me"
 custom_domain = true
@@ -19,7 +23,6 @@ custom_domain = true
 zone_name = "paolocattani.me"
 
 # R2 bucket for blog posts - create the bucket in Cloudflare Dashboard first
-# Dashboard → R2 → Create bucket → name it e.g. "paolocattani-blog"
 [[r2_buckets]]
 binding = "BLOG_BUCKET"
 bucket_name = "paolocattani-blog"
