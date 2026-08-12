@@ -10,6 +10,21 @@ Personal profile site built with Astro, Tailwind CSS, and Cloudflare.
 | `pnpm dev`     | Starts local dev server at `localhost:4321` |
 | `pnpm build`   | Build for production to `./dist/`           |
 | `pnpm preview` | Preview build with Wrangler (Cloudflare)    |
+| `pnpm deploy`  | Deploy Worker via Wrangler                  |
+
+## CI / deploy (GitHub Actions)
+
+Workflow [`.github/workflows/ci-deploy.yml`](.github/workflows/ci-deploy.yml): build on every PR and push; deploy the Worker on push to `main` only.
+
+Configure in the GitHub repo:
+
+| Kind | Name | Notes |
+| :--- | :--- | :--- |
+| Secret | `CLOUDFLARE_API_TOKEN` | Token with Workers deploy + R2 read (same pattern as journal) |
+| Secret | `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account ID |
+| Variable (optional) | `PUBLIC_FORMSPREE_ENDPOINT` | Contact form endpoint baked in at build time |
+
+Also create a GitHub Environment named `production` (deploy job uses it), and ensure the R2 bucket `paolocattani-blog` exists.
 
 ## Blog (R2)
 
