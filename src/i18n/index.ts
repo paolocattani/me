@@ -3,8 +3,8 @@ import it from "./it.json";
 
 const messages: Record<string, Record<string, unknown>> = { en, it };
 
-const DEFAULT_LOCALE = "en";
-const SUPPORTED_LOCALES = ["en", "it"] as const;
+const DEFAULT_LOCALE = "it";
+const SUPPORTED_LOCALES = ["it", "en"] as const;
 
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
 
