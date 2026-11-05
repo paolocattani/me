@@ -1,9 +1,10 @@
 {
   "layout": {
-    "defaultDescription": "Paolo Cattani - Software Engineer & Tech Lead",
+    "defaultDescription": "Technical Director. I build software, from the domain to the infrastructure.",
     "footerCopyright": "© {year} Paolo Cattani",
     "linkedIn": "LinkedIn",
-    "email": "Email"
+    "email": "Email",
+    "skip": "Skip to content"
   },
   "nav": {
     "home": "Home",
@@ -11,26 +12,29 @@
     "projects": "Projects",
     "blog": "Blog",
     "skills": "Skills",
-    "contact": "Contact"
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "home": {
-    "metaTitle": "Paolo Cattani | Software Engineer & Tech Lead",
-    "metaDescription": "Experienced Software Engineer and Tech Lead building scalable ERP systems for food distribution. NestJS, React, Kubernetes, AWS.",
-    "subtitle": "Software Engineer & Tech Lead",
+    "metaTitle": "Paolo Cattani | Technical Director",
+    "metaDescription": "Technical Director. I build software, from the domain to the infrastructure.",
+    "subtitle": "Technical Director",
     "greeting": "Hi, I'm",
     "name": "Paolo Cattani",
-    "tagline": "Building scalable ERP systems for large-scale food distribution.",
+    "tagline": "I turn uncertain ideas into products people can use.",
+    "about": "I start from a request that is still abstract and take it to a system people can use. I stay with the whole thread: domain, architecture, backend, frontend, infrastructure — without losing the product.",
     "techStack": "NestJS · React · Kubernetes · AWS",
     "downloadCv": "Download CV",
     "getInTouch": "Get in touch"
   },
   "experience": {
     "title": "Experience",
-    "intro": "Over 10 years building software systems—from ERP integrations to distributed platforms.",
+    "intro": "Over ten years on enterprise systems, distributed platforms, and ERP.",
     "jobs": [
       {
         "company": "GTN SPA",
-        "role": "Tech Lead",
+        "role": "Technical Director",
         "period": "Nov 2023 — Today",
         "location": "Udine",
         "description": "Craft an ERP solution for large-scale food distribution and build the development team from scratch.",
@@ -68,7 +72,7 @@
   },
   "projects": {
     "title": "Projects",
-    "intro": "Building systems that scale—from backend to infrastructure.",
+    "intro": "From backend to infrastructure, with the product in view.",
     "items": [
       {
         "name": "Vital",
@@ -105,49 +109,54 @@
   },
   "skills": {
     "title": "Skills",
-    "intro": "Technologies and practices I work with daily.",
+    "intro": "The areas I work in, and the tools I usually use.",
     "groups": [
       {
+        "title": "Architecture",
+        "description": "I model the domain, set module boundaries, and decide how services talk.",
+        "items": ["Domain-driven design", "System design", "SOA", "Event-driven", "TDD", "BDD"]
+      },
+      {
+        "title": "Interface",
+        "description": "I build the screens and client state, aligned with what the backend does.",
+        "items": ["React", "Redux", "RTK Query", "Redux Sagas", "TypeScript"]
+      },
+      {
         "title": "Backend",
-        "items": ["Node.js", "NestJS", "TypeScript", "Java", "GraphQL", "gRPC", "RabbitMQ"],
-        "color": "rose"
+        "description": "I write APIs, jobs, and integrations: HTTP, gRPC, queues, persistence.",
+        "items": ["NestJS", "Node.js", "gRPC", "HTTP", "GraphQL", "RabbitMQ", "Java"]
       },
       {
-        "title": "Frontend",
-        "items": ["React", "Redux", "RTK Query", "Redux Sagas"],
-        "color": "emerald"
-      },
-      {
-        "title": "Cloud & DevOps",
-        "items": ["Kubernetes", "AWS", "GitLab CI/CD", "Ansible", "Jenkins", "Docker"],
-        "color": "violet"
-      },
-      {
-        "title": "Practices",
-        "items": ["TDD", "BDD", "DDD", "Microservices", "SOA", "Event-driven"],
-        "color": "amber"
+        "title": "Infrastructure",
+        "description": "I set up build, deploy, and environments: containers, Kubernetes, AWS.",
+        "items": ["Kubernetes", "AWS", "Docker", "GitLab CI/CD", "Jenkins", "Ansible"]
       }
     ]
   },
   "contact": {
     "title": "Get in touch",
-    "intro": "Have a project in mind? Drop me a message—I'd love to hear from you.",
+    "intro": "If you have a problem that is still open, write to me.",
     "nameLabel": "Name",
     "namePlaceholder": "Your name",
     "emailLabel": "Email",
     "emailPlaceholder": "you@example.com",
     "messageLabel": "Message",
-    "messagePlaceholder": "Your message...",
-    "submit": "Send message"
+    "messagePlaceholder": "Your message",
+    "submit": "Send"
   },
   "blog": {
     "metaTitle": "Blog | Paolo Cattani",
-    "metaDescription": "Blog posts by Paolo Cattani - Software Engineer & Tech Lead.",
+    "metaDescription": "Notes by Paolo Cattani on software, architecture, and products that last.",
     "title": "Blog",
-    "intro": "Thoughts on software, architecture, and building systems that scale.",
-    "backToBlog": "← Back to blog",
+    "intro": "Notes on software, architecture, and products that last.",
+    "backToBlog": "Back to the blog",
     "noPosts": "No posts yet.",
     "noPostsHintPrefix": "Upload Markdown files to your R2 bucket under",
     "noPostsHintSuffix": " to see them here."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "This address does not exist, or no longer does.",
+    "home": "Back to home"
   }
 }

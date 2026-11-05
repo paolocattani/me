@@ -1,0 +1,22 @@
+/*
+  Theme tokens — edit this file only.
+
+  paper     = fondo
+  elevated  = card / superfici
+  ink       = testo
+  mute      = testo secondario
+  line      = bordi e divisori
+  copper    = accento (ora ciano spento)
+
+  Se cambi --pc-paper, allinea anche theme-color in Layout.astro
+  e i fill di public/favicon.svg / public/og.svg.
+*/
+:root {
+  --pc-paper: #101618;
+  --pc-elevated: #161c1f;
+  --pc-ink: #e6edef;
+  --pc-mute: #b4c0c4;
+  --pc-line: #3a4549;
+  --pc-copper: #1a6574;
+  --pc-copper-soft: #5a9aa6;
+}

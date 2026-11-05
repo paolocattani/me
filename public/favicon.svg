@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Paolo Cattani">
-  <rect width="32" height="32" rx="8" fill="#020617"/>
-  <rect x="1" y="1" width="30" height="30" rx="7" fill="none" stroke="#34d399" stroke-opacity="0.35" stroke-width="1"/>
+  <rect width="32" height="32" rx="8" fill="#101618"/>
+  <rect x="1.2" y="1.2" width="29.6" height="29.6" rx="6.8" fill="none" stroke="#1F7A8C" stroke-width="1.2"/>
   <path
-    fill="#34d399"
-    d="M10 7h8.2c3.55 0 5.8 1.95 5.8 5.05 0 3.15-2.3 5.15-5.85 5.15H14.2V25h-4.2V7zm4.2 3.15v3.9h3.55c1.55 0 2.45-.85 2.45-1.95s-.9-1.95-2.45-1.95H14.2z"
+    fill="#1F7A8C"
+    d="M9 24.8V8h8.6c3.35 0 5.45 1.85 5.45 4.8 0 2.9-2.1 4.8-5.45 4.8H12.5v7.2H9Zm3.5-9.7h4.9c1.55 0 2.5-.9 2.5-2.15S18.95 10.8 17.4 10.8h-4.9v4.3Z"
   />
 </svg>

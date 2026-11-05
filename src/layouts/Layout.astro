@@ -15,6 +15,7 @@ const metaDescription = description ?? defaultDescription;
 const footerCopyright = t(locale, "layout.footerCopyright", {
   year: new Date().getFullYear(),
 });
+const canonical = new URL(Astro.url.pathname, "https://paolocattani.me").toString();
 ---
 
 <!DOCTYPE html>
@@ -24,28 +25,40 @@ const footerCopyright = t(locale, "layout.footerCopyright", {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="theme-color" content="#020617" />
+    <meta name="theme-color" content="#101618" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={metaDescription} />
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content="https://paolocattani.me/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content="https://paolocattani.me/og.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+  <body class="min-h-[100dvh] bg-paper text-ink antialiased">
+    <a class="skip-link" href="#content">{t(locale, "layout.skip")}</a>
+    <div class="site-grain" aria-hidden="true"></div>
     <Navbar locale={locale} />
-    <main class="relative">
+    <main id="content" class="relative z-[2]">
       <slot />
     </main>
-    <footer class="border-t border-slate-800/50 py-8 mt-24">
+    <footer class="relative z-[2] mt-20 border-t border-line/80 pb-12 pt-8 md:mt-28">
       <div
-        class="container mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+        class="mx-auto flex w-[min(1120px,calc(100%-2rem))] flex-col items-start justify-between gap-4 sm:flex-row sm:items-center"
       >
-        <p class="text-slate-500 text-sm">
+        <p class="text-sm text-mute">
           {footerCopyright}
         </p>
         <div class="flex gap-6">
@@ -53,19 +66,32 @@ const footerCopyright = t(locale, "layout.footerCopyright", {
             href="https://www.linkedin.com/in/paolo-cattani"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-slate-400 hover:text-emerald-400 transition-colors"
+            class="text-sm text-mute transition-colors duration-300 ease-soft hover:text-copper"
             aria-label={t(locale, "layout.linkedIn")}
           >
             {t(locale, "layout.linkedIn")}
           </a>
           <a
             href="mailto:paolocattani0501@gmail.com"
-            class="text-slate-400 hover:text-emerald-400 transition-colors"
+            class="text-sm text-mute transition-colors duration-300 ease-soft hover:text-copper"
           >
             {t(locale, "layout.email")}
           </a>
         </div>
       </div>
     </footer>
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            entry.target.classList.add("is-in");
+            observer.unobserve(entry.target);
+          }
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      );
+      document.querySelectorAll("[data-reveal]").forEach((node) => observer.observe(node));
+    </script>
   </body>
 </html>

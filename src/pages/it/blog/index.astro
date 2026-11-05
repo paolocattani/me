@@ -59,25 +59,30 @@ const dateLocale = locale === "it" ? "it-IT" : "en-US";
   description={t(locale, "blog.metaDescription")}
   locale={locale}
 >
-  <section class="container mx-auto px-6 py-24">
-    <h1 class="text-4xl sm:text-5xl font-bold mb-4">
-      <span class="text-emerald-400">
+  <section class="mx-auto w-[min(1120px,calc(100%-2rem))] py-32 md:py-40">
+    <header data-reveal class="mb-16 max-w-xl md:mb-24">
+      <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-copper">
+        Blog
+      </p>
+      <h1 class="font-display text-5xl font-medium tracking-tight text-balance sm:text-6xl">
         {t(locale, "blog.title")}
-      </span>
-    </h1>
-    <p class="text-slate-400 text-lg mb-16 max-w-2xl">
-      {t(locale, "blog.intro")}
-    </p>
+      </h1>
+      <p class="mt-5 max-w-[46ch] text-lg leading-relaxed text-mute">
+        {t(locale, "blog.intro")}
+      </p>
+    </header>
     {posts.length > 0 ? (
-      <ul class="space-y-8">
+      <ul class="divide-y divide-line">
         {posts.map((post) => (
-          <li>
+          <li data-reveal>
             <a
               href={`${blogIndexPath}/${post.slug}`.replace(/\/+/g, "/")}
-              class="block rounded-2xl border border-slate-800 bg-slate-900/50 p-8 transition-all hover:border-emerald-500/50 hover:scale-[1.01]"
+              class="group block py-8 transition-transform duration-700 ease-soft md:py-10"
             >
-              <h2 class="text-2xl font-bold text-white mb-2">{post.title}</h2>
-              <time class="text-sm text-slate-500" datetime={post.date}>
+              <h2 class="font-display text-2xl font-medium tracking-tight group-hover:text-copper md:text-3xl">
+                {post.title}
+              </h2>
+              <time class="mt-2 block font-mono text-xs tabular-nums text-mute" datetime={post.date}>
                 {new Date(post.date).toLocaleDateString(dateLocale, {
                   year: "numeric",
                   month: "long",
@@ -85,20 +90,22 @@ const dateLocale = locale === "it" ? "it-IT" : "en-US";
                 })}
               </time>
               {post.description && (
-                <p class="mt-2 text-slate-400">{post.description}</p>
+                <p class="mt-3 max-w-[58ch] text-mute">{post.description}</p>
               )}
             </a>
           </li>
         ))}
       </ul>
     ) : (
-      <div class="rounded-2xl border border-slate-800 bg-slate-900/50 p-12 text-center">
-        <p class="text-slate-400 mb-4">{t(locale, "blog.noPosts")}</p>
-        <p class="text-sm text-slate-500">
-          {t(locale, "blog.noPostsHintPrefix")}
-          <code class="rounded bg-slate-800 px-2 py-1 mx-1">posts/</code>
-          {t(locale, "blog.noPostsHintSuffix")}
-        </p>
+      <div data-reveal class="bezel max-w-xl">
+        <div class="bezel-inner">
+          <p class="text-ink">{t(locale, "blog.noPosts")}</p>
+          <p class="mt-3 text-sm text-mute">
+            {t(locale, "blog.noPostsHintPrefix")}
+            <code class="mx-1 font-mono text-ink">posts/</code>
+            {t(locale, "blog.noPostsHintSuffix")}
+          </p>
+        </div>
       </div>
     )}
   </section>

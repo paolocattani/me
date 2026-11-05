@@ -1,6 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { t, type Locale, SUPPORTED_LOCALES } from "../i18n";
+import Mark from "./Mark.astro";
 
 interface Props {
   locale: Locale;
@@ -37,66 +38,169 @@ function isActive(item: (typeof navItems)[number]): boolean {
 
 const otherLocales = SUPPORTED_LOCALES.filter((l) => l !== locale);
 
-/** Current logical path without locale prefix (e.g. "" or "blog" or "blog/slug") */
 const pathWithoutLocale = currentPath
   .replace(new RegExp(`^/${locale}/?`), "/")
   .replace(/^\/?/, "") || "";
 ---
 
-<header class="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/50">
-  <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
-    <a href={buildHref(locale, "", "")} class="font-display font-bold text-xl tracking-tight">
-      <span class="text-emerald-400">
-        Paolo Cattani
-      </span>
-    </a>
-    <ul class="flex items-center gap-8">
-      {navItems.map((item) => (
-        <li>
+<header class="pointer-events-none fixed inset-x-0 top-0 z-50">
+  <div class="pointer-events-auto mx-auto mt-5 w-[min(1120px,calc(100%-1.5rem))]">
+    <nav
+      class="flex items-center justify-between rounded-full bg-paper/70 px-4 py-2 ring-1 ring-ink/8 backdrop-blur-xl md:px-5"
+      aria-label="Primary"
+    >
+      <a
+        href={buildHref(locale, "", "")}
+        class="flex items-center gap-2.5 text-copper"
+      >
+        <Mark class="h-7 w-7" />
+        <span class="font-display text-lg font-medium tracking-tight text-ink">
+          Paolo Cattani
+        </span>
+      </a>
+      <ul class="hidden items-center gap-9 lg:flex">
+        {navItems.map((item) => (
+          <li>
+            <a
+              href={buildHref(locale, item.path, item.hash)}
+              data-nav
+              class:list={["nav-link", isActive(item) && "is-active"]}
+              aria-current={isActive(item) ? "page" : undefined}
+            >
+              {t(locale, item.key)}
+            </a>
+          </li>
+        ))}
+        <li class="flex items-center gap-2 border-l border-line pl-5">
+          {otherLocales.map((other) => (
+            <a
+              href={buildHref(other, pathWithoutLocale, currentHash)}
+              class="nav-link uppercase"
+              aria-label={other === "it" ? "Passa a Italiano" : "Switch to English"}
+            >
+              {other}
+            </a>
+          ))}
+        </li>
+      </ul>
+      <button
+        type="button"
+        class="relative flex h-11 w-11 items-center justify-center rounded-full text-ink lg:hidden"
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="sr-only">{t(locale, "nav.openMenu")}</span>
+        <span class="relative block h-3.5 w-5" aria-hidden="true">
+          <span
+            data-bar="top"
+            class="absolute left-0 top-0 h-px w-full bg-ink transition-transform duration-700 ease-soft"
+          ></span>
+          <span
+            data-bar="bottom"
+            class="absolute bottom-0 left-0 h-px w-full bg-ink transition-transform duration-700 ease-soft"
+          ></span>
+        </span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-40 hidden bg-paper/90 backdrop-blur-3xl lg:hidden"
+  hidden
+>
+  <div class="flex min-h-[100dvh] flex-col justify-end px-6 pb-16 pt-28">
+    <ul class="space-y-2">
+      {navItems.map((item, index) => (
+        <li
+          data-menu-item
+          class="translate-y-8 opacity-0 transition duration-700 ease-soft"
+          style={`transition-delay: ${100 + index * 50}ms`}
+        >
           <a
             href={buildHref(locale, item.path, item.hash)}
+            data-nav
             class:list={[
-              "text-sm font-medium transition-colors hover:text-emerald-400",
-              isActive(item) ? "text-emerald-400" : "text-slate-400",
+              "font-display block py-2 text-4xl font-medium tracking-tight text-ink",
+              isActive(item) && "text-copper",
             ]}
           >
             {t(locale, item.key)}
           </a>
         </li>
       ))}
-      <li class="flex items-center gap-2 border-l border-slate-700 pl-6">
-        {otherLocales.map((other) => (
-          <a
-            href={buildHref(other, pathWithoutLocale, currentHash)}
-            class="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors uppercase"
-            aria-label={other === "it" ? "Passa a Italiano" : "Switch to English"}
-          >
-            {other}
-          </a>
-        ))}
-      </li>
     </ul>
-  </nav>
-</header>
-<script define:vars={{ locale }}>
+    <div class="mt-10 flex gap-4 border-t border-line pt-6">
+      {otherLocales.map((other) => (
+        <a
+          href={buildHref(other, pathWithoutLocale, currentHash)}
+          class="nav-link uppercase"
+          aria-label={other === "it" ? "Passa a Italiano" : "Switch to English"}
+        >
+          {other}
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ locale, openLabel: t(locale, "nav.openMenu"), closeLabel: t(locale, "nav.closeMenu") }}>
+  const toggle = document.querySelector("[data-menu-toggle]");
+  const menu = document.getElementById("mobile-menu");
+  const topBar = document.querySelector("[data-bar='top']");
+  const bottomBar = document.querySelector("[data-bar='bottom']");
+  const items = document.querySelectorAll("[data-menu-item]");
+  const label = toggle?.querySelector(".sr-only");
+
+  function setOpen(isOpen) {
+    if (!toggle || !menu) return;
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    menu.hidden = !isOpen;
+    menu.classList.toggle("hidden", !isOpen);
+    document.body.classList.toggle("overflow-hidden", isOpen);
+    if (label) label.textContent = isOpen ? closeLabel : openLabel;
+    topBar?.classList.toggle("translate-y-[7px]", isOpen);
+    topBar?.classList.toggle("rotate-45", isOpen);
+    bottomBar?.classList.toggle("-translate-y-[7px]", isOpen);
+    bottomBar?.classList.toggle("-rotate-45", isOpen);
+    items.forEach((item) => {
+      item.classList.toggle("translate-y-0", isOpen);
+      item.classList.toggle("opacity-100", isOpen);
+      item.classList.toggle("translate-y-8", !isOpen);
+      item.classList.toggle("opacity-0", !isOpen);
+    });
+  }
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = toggle.getAttribute("aria-expanded") === "true";
+    setOpen(!isOpen);
+  });
+
+  menu?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setOpen(false));
+  });
+
   function updateActiveNav() {
     const pathname = window.location.pathname;
     const hash = (window.location.hash || "").replace("#", "");
-    document.querySelectorAll("nav a[href^='/']").forEach((link) => {
+    document.querySelectorAll("a[data-nav]").forEach((link) => {
       const href = link.getAttribute("href") ?? "";
-      if (href.startsWith("http") || href.startsWith("mailto:")) return;
       const [pathPart, hashPart] = href.split("#");
       const path = pathPart.endsWith("/") && pathPart.length > 1 ? pathPart.slice(0, -1) : pathPart;
       const isBlog = path === "/blog" || path === `/${locale}/blog`;
       const isHome = path === "/" || path === `/${locale}`;
-      const isActive =
+      const active =
         (isBlog && pathname.startsWith(path)) ||
-        (isHome && pathname === path && !hash) ||
+        (isHome && pathname === path && !hash && !hashPart) ||
         (pathname === path && (hashPart || "") === hash);
-      link.classList.toggle("text-emerald-400", isActive);
-      link.classList.toggle("text-slate-400", !isActive);
+      link.classList.toggle("is-active", active);
+      if (active) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
     });
   }
+
   updateActiveNav();
   window.addEventListener("hashchange", updateActiveNav);
 </script>

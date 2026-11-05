@@ -48,15 +48,16 @@ const dateLocale = locale === "it" ? "it-IT" : "en-US";
 ---
 
 <Layout title={`${title} | Paolo Cattani`} description={description ?? title} locale={locale}>
-  <article class="container mx-auto px-6 py-24 max-w-3xl">
-    <header class="mb-12">
-      <h1 class="text-4xl sm:text-5xl font-bold mb-4">
-        <span class="bg-gradient-to-r from-rose-500 via-emerald-400 to-violet-500 bg-clip-text text-transparent">
-          {title}
-        </span>
+  <article class="mx-auto w-[min(720px,calc(100%-2rem))] py-32 md:py-40">
+    <header data-reveal class="mb-12">
+      <a href={blogIndexPath} class="btn-ghost mb-8 px-0 text-sm">
+        {t(locale, "blog.backToBlog")}
+      </a>
+      <h1 class="font-display text-4xl font-medium tracking-tight text-balance sm:text-5xl">
+        {title}
       </h1>
       {date && (
-        <time class="text-slate-500" datetime={date}>
+        <time class="mt-4 block font-mono text-xs tabular-nums text-mute" datetime={date}>
           {new Date(date).toLocaleDateString(dateLocale, {
             year: "numeric",
             month: "long",
@@ -66,14 +67,11 @@ const dateLocale = locale === "it" ? "it-IT" : "en-US";
       )}
     </header>
     <div
-      class="prose prose-invert prose-slate max-w-none prose-headings:text-white prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline prose-strong:text-white prose-code:text-emerald-400 prose-code:bg-slate-800 prose-code:px-1 prose-code:rounded prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-800"
+      class="prose max-w-none prose-headings:font-display prose-headings:font-medium prose-headings:tracking-tight prose-headings:text-ink prose-p:text-ink/85 prose-a:text-copper prose-a:no-underline hover:prose-a:underline prose-strong:text-ink prose-code:rounded prose-code:bg-ink/5 prose-code:px-1 prose-code:text-copper prose-pre:bg-ink prose-pre:text-paper"
       set:html={content}
     />
-    <footer class="mt-16 pt-8 border-t border-slate-800">
-      <a
-        href={blogIndexPath}
-        class="text-emerald-400 hover:text-emerald-300 transition-colors"
-      >
+    <footer class="mt-16 border-t border-line pt-8">
+      <a href={blogIndexPath} class="btn-ghost px-0">
         {t(locale, "blog.backToBlog")}
       </a>
     </footer>

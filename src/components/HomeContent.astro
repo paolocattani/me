@@ -8,13 +8,11 @@ interface Job {
   location: string;
   description: string;
   tech: string;
-  color: string;
 }
 
 interface Project {
   name: string;
   description: string;
-  gradient: string;
   highlights: string[];
   url?: string;
   urlLabel?: string;
@@ -22,8 +20,8 @@ interface Project {
 
 interface SkillGroup {
   title: string;
+  description: string;
   items: string[];
-  color: string;
 }
 
 interface Props {
@@ -37,144 +35,173 @@ const jobs = get<Job[]>(locale, "experience.jobs") ?? [];
 const projects = get<Project[]>(locale, "projects.items") ?? [];
 const skillGroups = get<SkillGroup[]>(locale, "skills.groups") ?? [];
 
-const colorMap: Record<string, string> = {
-  rose: "bg-rose-500/20 text-rose-400 border-rose-500/30",
-  emerald: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-  violet: "bg-violet-500/20 text-violet-400 border-violet-500/30",
-  amber: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-};
+function formatIndex(value: number): string {
+  return String(value).padStart(2, "0");
+}
 ---
 
 <section
   id="home"
-  class="relative min-h-[90vh] flex flex-col items-center justify-center overflow-hidden"
+  class="relative mx-auto flex min-h-[100dvh] w-[min(1120px,calc(100%-2rem))] flex-col justify-end pb-20 pt-36 md:pb-28 md:pt-44"
 >
   <div
-    class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(52,211,153,0.12),transparent)]"
-  />
-  <div
-    class="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_80%_50%,rgba(52,211,153,0.06),transparent)]"
-  />
-  <div
-    class="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_20%_80%,rgba(16,185,129,0.06),transparent)]"
-  />
-  <div class="container mx-auto px-6 relative z-10 text-center">
-    <p
-      class="text-emerald-400 font-medium mb-4 tracking-wider uppercase text-sm"
-    >
-      {t(locale, "home.subtitle")}
-    </p>
-    <h1
-      class="font-bold text-5xl sm:text-7xl md:text-8xl mb-6 tracking-tight"
-    >
-      <span class="block">{t(locale, "home.greeting")}</span>
-      <span class="text-emerald-400"> {t(locale, "home.name")} </span>
-    </h1>
-    <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-12">
-      {t(locale, "home.tagline")}
-      <br />
-      <span class="text-slate-300">{t(locale, "home.techStack")}</span>
-    </p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-      <a
-        href="/cv/CV_Paolo_Cattani.pdf"
-        download
-        class="group inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-slate-950 bg-emerald-500 hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:scale-105"
+    class="pointer-events-none absolute -left-24 top-20 h-80 w-80 rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--color-copper)_18%,transparent),transparent_70%)]"
+    aria-hidden="true"
+  ></div>
+  <div class="grid items-end gap-12 lg:grid-cols-12 lg:gap-16">
+    <div class="lg:col-span-7">
+      <p
+        data-reveal
+        class="mb-5 text-[11px] font-medium uppercase tracking-[0.22em] text-copper"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-          <polyline points="7 10 12 15 17 10" />
-          <line x1="12" y1="15" x2="12" y2="3" />
-        </svg>
-        {t(locale, "home.downloadCv")}
-      </a>
-      <a
-        href="#contact"
-        class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border-2 border-slate-600 text-slate-300 hover:border-emerald-400 hover:text-emerald-400 transition-colors"
+        {t(locale, "home.subtitle")}
+      </p>
+      <h1 class="font-display leading-[0.95] font-medium tracking-tight text-balance">
+        <span data-reveal style="--d: 80ms" class="block text-4xl text-ink sm:text-5xl md:text-6xl">
+          {t(locale, "home.greeting")}
+        </span>
+        <span data-reveal style="--d: 140ms" class="mt-2 block text-5xl sm:text-7xl md:text-8xl">
+          {t(locale, "home.name")}
+        </span>
+      </h1>
+      <p
+        data-reveal
+        style="--d: 200ms"
+        class="mt-8 max-w-[28ch] text-xl leading-snug text-mute text-pretty sm:text-2xl"
       >
-        {t(locale, "home.getInTouch")}
-      </a>
+        {t(locale, "home.tagline")}
+      </p>
+    </div>
+    <div class="lg:col-span-5 lg:pb-2">
+      <p
+        data-reveal
+        style="--d: 240ms"
+        class="max-w-[38ch] text-lg leading-relaxed text-mute"
+      >
+        {t(locale, "home.about")}
+      </p>
+      <p
+        data-reveal
+        style="--d: 280ms"
+        class="mt-6 font-mono text-xs tracking-wide text-mute"
+      >
+        {t(locale, "home.techStack")}
+      </p>
+      <div data-reveal style="--d: 320ms" class="mt-10 flex flex-wrap items-center gap-4">
+        <a href="#contact" class="btn-primary">
+          {t(locale, "home.getInTouch")}
+          <span class="btn-icon">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 12 12 4M6 4h6v6" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+        </a>
+        <a href="/cv/CV_Paolo_Cattani.pdf" download class="btn-outline">
+          {t(locale, "home.downloadCv")}
+          <span class="btn-icon">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="experience" class="container mx-auto px-6 py-24 scroll-mt-20">
-  <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-emerald-400">
-    {t(locale, "experience.title")}
-  </h2>
-  <p class="text-slate-400 text-lg mb-16 max-w-2xl">
-    {t(locale, "experience.intro")}
-  </p>
-  <div class="space-y-8">
-    {jobs.map((job) => (
-      <article
-        class={`rounded-2xl border bg-gradient-to-br p-8 transition-all hover:scale-[1.01] ${job.color}`}
-      >
-        <div
-          class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4"
-        >
-          <div>
-            <h3 class="text-2xl font-bold text-white">
-              {job.role} · {job.company}
-            </h3>
-            <p class="text-slate-400">{job.location}</p>
-          </div>
-          <span class="text-sm font-medium text-slate-400 shrink-0">
-            {job.period}
-          </span>
+<section
+  id="experience"
+  class="mx-auto w-[min(1120px,calc(100%-2rem))] scroll-mt-28 py-24 md:py-36"
+>
+  <header data-reveal class="mb-16 max-w-xl md:mb-24">
+    <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-copper">
+      {formatIndex(1)}
+    </p>
+    <h2 class="font-display text-4xl font-medium tracking-tight text-balance sm:text-5xl">
+      {t(locale, "experience.title")}
+    </h2>
+    <p class="mt-5 max-w-[46ch] text-lg leading-relaxed text-mute">
+      {t(locale, "experience.intro")}
+    </p>
+  </header>
+  <ol class="divide-y divide-line">
+    {jobs.map((job, index) => (
+      <li data-reveal class="grid gap-4 py-10 md:grid-cols-12 md:gap-8 md:py-12">
+        <div class="md:col-span-3">
+          <p class="font-mono text-xs tabular-nums text-mute">{formatIndex(index + 1)}</p>
+          <p class="mt-2 text-sm text-mute">{job.period}</p>
+          <p class="text-sm text-mute">{job.location}</p>
         </div>
-        <p class="text-slate-300 mb-4">{job.description}</p>
-        <p class="text-sm text-slate-500">{job.tech}</p>
-      </article>
+        <div class="md:col-span-9">
+          <h3 class="font-display text-2xl font-medium tracking-tight md:text-3xl">
+            {job.role}
+          </h3>
+          <p class="mt-1 text-mute">{job.company}</p>
+          <p class="mt-4 max-w-[58ch] leading-relaxed text-ink/85">
+            {job.description}
+          </p>
+          <p class="mt-4 font-mono text-xs leading-relaxed text-ink/70">
+            {job.tech}
+          </p>
+        </div>
+      </li>
     ))}
-  </div>
+  </ol>
 </section>
 
-<section id="projects" class="container mx-auto px-6 py-24 scroll-mt-20">
-  <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-emerald-400">
-    {t(locale, "projects.title")}
-  </h2>
-  <p class="text-slate-400 text-lg mb-16 max-w-2xl">
-    {t(locale, "projects.intro")}
-  </p>
-  <div class="space-y-12">
-    {projects.map((project) => (
+<section
+  id="projects"
+  class="mx-auto w-[min(1120px,calc(100%-2rem))] scroll-mt-28 py-24 md:py-36"
+>
+  <header data-reveal class="mb-16 max-w-xl md:mb-24">
+    <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-copper">
+      {formatIndex(2)}
+    </p>
+    <h2 class="font-display text-4xl font-medium tracking-tight text-balance sm:text-5xl">
+      {t(locale, "projects.title")}
+    </h2>
+    <p class="mt-5 max-w-[46ch] text-lg leading-relaxed text-mute">
+      {t(locale, "projects.intro")}
+    </p>
+  </header>
+  <div class="grid gap-6 md:grid-cols-12">
+    {projects.map((project, index) => (
       <article
-        class="relative rounded-2xl border border-slate-800 bg-slate-900/50 p-8 md:p-12 overflow-hidden"
+        data-reveal
+        class:list={[
+          "bezel",
+          index === 0 ? "md:col-span-7" : "md:col-span-5",
+        ]}
       >
-        <div
-          class={`absolute -top-24 -right-24 w-96 h-96 rounded-full bg-gradient-to-br blur-3xl opacity-20 ${project.gradient}`}
-        />
-        <div class="relative">
-          <div class="flex flex-wrap items-baseline justify-between gap-3 mb-4">
-            <h3 class="text-3xl font-bold">{project.name}</h3>
+        <div class="bezel-inner flex h-full flex-col">
+          <div class="flex flex-wrap items-baseline justify-between gap-3">
+            <h3 class="font-display text-3xl font-medium tracking-tight">
+              {project.name}
+            </h3>
             {project.url && (
               <a
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-emerald-400 hover:text-emerald-300 font-medium transition-colors"
+                class="group inline-flex items-center gap-2 text-sm text-copper transition-transform duration-700 ease-soft"
               >
                 {project.urlLabel ?? project.url}
+                <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-copper/10 transition-transform duration-700 ease-soft group-hover:translate-x-0.5 group-hover:-translate-y-px">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M4 12 12 4M6 4h6v6" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </span>
               </a>
             )}
           </div>
-          <p class="text-slate-400 text-lg mb-8">{project.description}</p>
-          <ul class="grid sm:grid-cols-2 gap-3">
+          <p class="mt-4 max-w-[46ch] leading-relaxed text-mute">
+            {project.description}
+          </p>
+          <ul class="mt-8 grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2">
             {project.highlights.map((item) => (
-              <li class="flex items-center gap-2 text-slate-300">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
-                {item}
+              <li class="flex items-start gap-3 text-sm leading-5 text-ink/80">
+                <span class="mt-[9px] h-px w-4 shrink-0 bg-copper/70"></span>
+                <span>{item}</span>
               </li>
             ))}
           </ul>
@@ -184,112 +211,131 @@ const colorMap: Record<string, string> = {
   </div>
 </section>
 
-<section id="skills" class="container mx-auto px-6 py-24 scroll-mt-20">
-  <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-emerald-400">
-    {t(locale, "skills.title")}
-  </h2>
-  <p class="text-slate-400 text-lg mb-16 max-w-2xl">
-    {t(locale, "skills.intro")}
-  </p>
-  <div class="grid sm:grid-cols-2 gap-8">
-    {skillGroups.map((group) => (
-      <div class="rounded-2xl border border-slate-800 bg-slate-900/50 p-8">
-        <h3 class="text-xl font-bold mb-6 text-white">{group.title}</h3>
-        <div class="flex flex-wrap gap-3">
-          {group.items.map((item) => (
-            <span
-              class={`px-4 py-2 rounded-full text-sm font-medium border ${colorMap[group.color]}`}
-            >
-              {item}
-            </span>
-          ))}
+<section
+  id="skills"
+  class="mx-auto w-[min(1120px,calc(100%-2rem))] scroll-mt-28 py-24 md:py-36"
+>
+  <header data-reveal class="mb-16 max-w-xl md:mb-20">
+    <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-copper">
+      {formatIndex(3)}
+    </p>
+    <h2 class="font-display text-4xl font-medium tracking-tight text-balance sm:text-5xl">
+      {t(locale, "skills.title")}
+    </h2>
+    <p class="mt-5 max-w-[46ch] text-lg leading-relaxed text-mute">
+      {t(locale, "skills.intro")}
+    </p>
+  </header>
+  <ol class="divide-y divide-line">
+    {skillGroups.map((group, index) => (
+      <li data-reveal class="grid gap-5 py-10 md:grid-cols-12 md:gap-8 md:py-12">
+        <div class="md:col-span-4">
+          <p class="font-mono text-xs tabular-nums text-mute">{formatIndex(index + 1)}</p>
+          <h3 class="font-display mt-2 text-2xl font-medium tracking-tight md:text-3xl">
+            {group.title}
+          </h3>
         </div>
-      </div>
+        <div class="md:col-span-8">
+          <p class="max-w-[54ch] leading-relaxed text-ink/85">
+            {group.description}
+          </p>
+          <ul class="mt-5 flex flex-wrap gap-2">
+            {group.items.map((item) => (
+              <li class="rounded-full bg-ink/5 px-3 py-1 font-mono text-xs text-ink/80 ring-1 ring-ink/15">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </li>
     ))}
-  </div>
+  </ol>
 </section>
 
 <section
   id="contact"
-  class="container mx-auto px-6 py-24 max-w-2xl scroll-mt-20"
+  class="mx-auto w-[min(1120px,calc(100%-2rem))] scroll-mt-28 py-24 md:py-36 md:pb-40"
 >
-  <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-emerald-400">
-    {t(locale, "contact.title")}
-  </h2>
-  <p class="text-slate-400 text-lg mb-12">
-    {t(locale, "contact.intro")}
-  </p>
-  <form
-    action={formspreeEndpoint}
-    method="POST"
-    class="space-y-6 rounded-2xl border border-slate-800 bg-slate-900/50 p-8"
-  >
-    <div>
-      <label for="name" class="block text-sm font-medium text-slate-300 mb-2">
-        {t(locale, "contact.nameLabel")}
-      </label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        required
-        class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-        placeholder={t(locale, "contact.namePlaceholder")}
-      />
+  <div class="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+    <header data-reveal class="lg:col-span-5">
+      <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-copper">
+        {formatIndex(4)}
+      </p>
+      <h2 class="font-display text-4xl font-medium tracking-tight text-balance sm:text-5xl">
+        {t(locale, "contact.title")}
+      </h2>
+      <p class="mt-5 max-w-[36ch] text-lg leading-relaxed text-mute">
+        {t(locale, "contact.intro")}
+      </p>
+      <div class="mt-10 flex flex-col gap-3 text-sm">
+        <a
+          href="mailto:paolocattani0501@gmail.com"
+          class="text-ink transition-colors duration-300 ease-soft hover:text-copper"
+        >
+          paolocattani0501@gmail.com
+        </a>
+        <a
+          href="https://www.linkedin.com/in/paolo-cattani"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-ink transition-colors duration-300 ease-soft hover:text-copper"
+        >
+          LinkedIn
+        </a>
+      </div>
+    </header>
+    <div data-reveal class="bezel lg:col-span-7">
+      <form action={formspreeEndpoint} method="POST" class="bezel-inner space-y-6">
+        <div>
+          <label for="name" class="mb-2 block text-sm text-ink">
+            {t(locale, "contact.nameLabel")}
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            autocomplete="name"
+            class="w-full rounded-2xl bg-ink/4 px-4 py-3 text-ink placeholder:text-mute/70 ring-1 ring-ink/8 transition duration-300 ease-soft focus:outline-none focus:ring-2 focus:ring-copper"
+            placeholder={t(locale, "contact.namePlaceholder")}
+          />
+        </div>
+        <div>
+          <label for="email" class="mb-2 block text-sm text-ink">
+            {t(locale, "contact.emailLabel")}
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            autocomplete="email"
+            class="w-full rounded-2xl bg-ink/4 px-4 py-3 text-ink placeholder:text-mute/70 ring-1 ring-ink/8 transition duration-300 ease-soft focus:outline-none focus:ring-2 focus:ring-copper"
+            placeholder={t(locale, "contact.emailPlaceholder")}
+          />
+        </div>
+        <div>
+          <label for="message" class="mb-2 block text-sm text-ink">
+            {t(locale, "contact.messageLabel")}
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            required
+            class="w-full resize-none rounded-2xl bg-ink/4 px-4 py-3 text-ink placeholder:text-mute/70 ring-1 ring-ink/8 transition duration-300 ease-soft focus:outline-none focus:ring-2 focus:ring-copper"
+            placeholder={t(locale, "contact.messagePlaceholder")}
+          />
+        </div>
+        <button type="submit" class="btn-primary">
+          {t(locale, "contact.submit")}
+          <span class="btn-icon">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 12 12 4M6 4h6v6" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+        </button>
+      </form>
     </div>
-    <div>
-      <label
-        for="email"
-        class="block text-sm font-medium text-slate-300 mb-2"
-      >
-        {t(locale, "contact.emailLabel")}
-      </label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        required
-        class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-        placeholder={t(locale, "contact.emailPlaceholder")}
-      />
-    </div>
-    <div>
-      <label
-        for="message"
-        class="block text-sm font-medium text-slate-300 mb-2"
-      >
-        {t(locale, "contact.messageLabel")}
-      </label>
-      <textarea
-        id="message"
-        name="message"
-        rows="5"
-        required
-        class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all resize-none"
-        placeholder={t(locale, "contact.messagePlaceholder")}
-      />
-    </div>
-    <button
-      type="submit"
-      class="w-full py-4 rounded-full font-semibold text-slate-950 bg-emerald-500 hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40"
-    >
-      {t(locale, "contact.submit")}
-    </button>
-  </form>
-  <div class="mt-12 flex flex-wrap gap-6 text-slate-400">
-    <a
-      href="mailto:paolocattani0501@gmail.com"
-      class="flex items-center gap-2 hover:text-emerald-400 transition-colors"
-    >
-      paolocattani0501@gmail.com
-    </a>
-    <a
-      href="https://www.linkedin.com/in/paolo-cattani"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="flex items-center gap-2 hover:text-emerald-400 transition-colors"
-    >
-      LinkedIn
-    </a>
   </div>
 </section>
