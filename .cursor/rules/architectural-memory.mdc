@@ -1,0 +1,14 @@
+---
+description: Personal site DNA and public writing. Always apply.
+alwaysApply: true
+---
+
+# paolocattani.me — agent memory
+
+Before implementation or public writing, read `docs/STATUS.md` (the matching area row only) and `docs/knowledge/MAP.md`.
+
+Public copy (LinkedIn, blog, Substack) uses `.cursor/skills/public-writing/SKILL.md`. Voice lives in `docs/knowledge/VOICE.md`. Do not invent a second style.
+
+`STATUS.md`: one current sentence per area. Replace it. Do not append history.
+
+`docs/knowledge/`: update only when architecture, voice, channel rules, or series rows change.
