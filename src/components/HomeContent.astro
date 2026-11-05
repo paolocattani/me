@@ -26,10 +26,9 @@ interface SkillGroup {
 
 interface Props {
   locale: Locale;
-  formspreeEndpoint: string;
 }
 
-const { locale, formspreeEndpoint } = Astro.props;
+const { locale } = Astro.props;
 
 const jobs = get<Job[]>(locale, "experience.jobs") ?? [];
 const projects = get<Project[]>(locale, "projects.items") ?? [];
@@ -285,7 +284,11 @@ function formatIndex(value: number): string {
       </div>
     </header>
     <div data-reveal class="bezel lg:col-span-7">
-      <form action={formspreeEndpoint} method="POST" class="bezel-inner space-y-6">
+      <form data-contact-form class="bezel-inner relative space-y-6">
+        <div class="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
         <div>
           <label for="name" class="mb-2 block text-sm text-ink">
             {t(locale, "contact.nameLabel")}
@@ -295,6 +298,7 @@ function formatIndex(value: number): string {
             id="name"
             name="name"
             required
+            maxlength="120"
             autocomplete="name"
             class="w-full rounded-2xl bg-ink/4 px-4 py-3 text-ink placeholder:text-mute/70 ring-1 ring-ink/8 transition duration-300 ease-soft focus:outline-none focus:ring-2 focus:ring-copper"
             placeholder={t(locale, "contact.namePlaceholder")}
@@ -309,6 +313,7 @@ function formatIndex(value: number): string {
             id="email"
             name="email"
             required
+            maxlength="254"
             autocomplete="email"
             class="w-full rounded-2xl bg-ink/4 px-4 py-3 text-ink placeholder:text-mute/70 ring-1 ring-ink/8 transition duration-300 ease-soft focus:outline-none focus:ring-2 focus:ring-copper"
             placeholder={t(locale, "contact.emailPlaceholder")}
@@ -323,19 +328,60 @@ function formatIndex(value: number): string {
             name="message"
             rows="5"
             required
+            maxlength="5000"
             class="w-full resize-none rounded-2xl bg-ink/4 px-4 py-3 text-ink placeholder:text-mute/70 ring-1 ring-ink/8 transition duration-300 ease-soft focus:outline-none focus:ring-2 focus:ring-copper"
             placeholder={t(locale, "contact.messagePlaceholder")}
           />
         </div>
-        <button type="submit" class="btn-primary">
-          {t(locale, "contact.submit")}
+        <button type="submit" class="btn-primary disabled:cursor-not-allowed disabled:opacity-60" data-contact-submit>
+          <span data-submit-label>{t(locale, "contact.submit")}</span>
           <span class="btn-icon">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M4 12 12 4M6 4h6v6" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
           </span>
         </button>
+        <p data-contact-status class="text-sm text-mute empty:hidden" role="status"></p>
       </form>
+      <script define:vars={{ sendingLabel: t(locale, "contact.sending"), successMessage: t(locale, "contact.success"), errorMessage: t(locale, "contact.error"), submitLabel: t(locale, "contact.submit") }}>
+        const form = document.querySelector("[data-contact-form]");
+        const status = form?.querySelector("[data-contact-status]");
+        const button = form?.querySelector("[data-contact-submit]");
+        const buttonLabel = form?.querySelector("[data-submit-label]");
+        form?.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          if (!(form instanceof HTMLFormElement) || !(button instanceof HTMLButtonElement)) return;
+          button.disabled = true;
+          if (buttonLabel) buttonLabel.textContent = sendingLabel;
+          status?.classList.remove("text-copper");
+          if (status) status.textContent = "";
+          const data = new FormData(form);
+          try {
+            const response = await fetch("/api/contact", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({
+                name: String(data.get("name") ?? ""),
+                email: String(data.get("email") ?? ""),
+                message: String(data.get("message") ?? ""),
+                website: String(data.get("website") ?? ""),
+              }),
+            });
+            const body = await response.json().catch(() => null);
+            if (!response.ok || !body?.ok) throw new Error("failed");
+            form.reset();
+            if (status) {
+              status.textContent = successMessage;
+              status.classList.add("text-copper");
+            }
+          } catch {
+            if (status) status.textContent = errorMessage;
+          } finally {
+            button.disabled = false;
+            if (buttonLabel) buttonLabel.textContent = submitLabel;
+          }
+        });
+      </script>
     </div>
   </div>
 </section>

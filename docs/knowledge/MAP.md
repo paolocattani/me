@@ -12,6 +12,7 @@ graph TD
     Astro[Astro pages EN + IT]
     R2[(R2 paolocattani-blog)]
     Worker[Cloudflare Worker]
+    Email[Email Sending]
   end
 
   subgraph writing [Public writing]
@@ -30,6 +31,7 @@ graph TD
   Blog --> R2
   R2 --> Worker
   Worker --> Astro
+  Worker --> Email
   Skill --> Substack
   Blog --> Substack
 ```
@@ -51,3 +53,4 @@ graph TD
 - Frontmatter: `title`, `date` (`YYYY-MM-DD`), `description`. Optional: `lang`, `series`, `series_index`.
 - LinkedIn profile: `https://www.linkedin.com/in/paolo-cattani`
 - Giova is already named on the home page. Customer names are not.
+- The contact form is `POST /api/contact`. The Worker sends from `contact@paolocattani.me` to `paolocattani0501@gmail.com` through the `EMAIL` binding. No Formspree.

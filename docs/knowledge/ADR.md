@@ -1,5 +1,21 @@
 # Architectural Decision Records
 
+## ADR-0006 — Contact form sends through Cloudflare Email Sending
+
+### Context
+
+The home form posted to a Formspree placeholder that was never configured. The site already runs as a Worker on `paolocattani.me`. Cloudflare Email Sending can deliver a transactional message without another vendor. Sending to arbitrary recipients needs Workers Paid. Sending to one verified destination does not.
+
+### Decision
+
+`POST /api/contact` sends one email with the `EMAIL` binding. From `contact@paolocattani.me`, to `paolocattani0501@gmail.com`, reply-to the visitor. The binding is locked to that destination. Email Routing stays off. Turnstile is out of this change; the form uses a honeypot and length limits.
+
+### Consequences
+
+- The domain must be onboarded on Email Sending or the Worker cannot send from `@paolocattani.me`.
+- The destination address is already verified on the account.
+- A real send still depends on that domain onboard, which the current API token cannot perform.
+
 ## ADR-0005 — Empty LinkedIn profile opens with why, not the flagship
 
 ### Context

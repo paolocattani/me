@@ -22,7 +22,6 @@ Configure in the GitHub repo:
 | :--- | :--- | :--- |
 | Secret | `CLOUDFLARE_API_TOKEN` | Token with Workers deploy + R2 read (same pattern as journal) |
 | Secret | `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account ID |
-| Variable (optional) | `PUBLIC_FORMSPREE_ENDPOINT` | Contact form endpoint baked in at build time |
 
 Also create a GitHub Environment named `production` (deploy job uses it), and ensure the R2 bucket `paolocattani-blog` exists.
 
@@ -55,3 +54,7 @@ Your content in **Markdown**...
 
 - **Dashboard:** R2 → bucket → Upload → create folder `posts/` → upload `.md` file
 - **Wrangler:** `wrangler r2 object put paolocattani-blog/posts/my-post.md --file=./my-post.md`
+
+## Contact form
+
+The home form posts to `/api/contact`. The Worker sends the message with the `EMAIL` binding, from `contact@paolocattani.me` to the verified destination in `wrangler.toml`. `paolocattani.me` must be onboarded on Cloudflare Email Sending before a message can leave the Worker.

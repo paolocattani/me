@@ -142,7 +142,10 @@
     "emailPlaceholder": "you@example.com",
     "messageLabel": "Message",
     "messagePlaceholder": "Your message",
-    "submit": "Send"
+    "submit": "Send",
+    "sending": "Sending…",
+    "success": "Message sent.",
+    "error": "Could not send. Try again, or write to paolocattani0501@gmail.com."
   },
   "blog": {
     "metaTitle": "Blog | Paolo Cattani",

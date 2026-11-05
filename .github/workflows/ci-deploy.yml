@@ -1,6 +1,5 @@
 # CI on every PR and push; deploy Worker only on main (after build passes).
 # Configure: Repository secrets CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID.
-#            Optional repository variable PUBLIC_FORMSPREE_ENDPOINT (contact form).
 
 name: CI and deploy
 
@@ -22,8 +21,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    env:
-      PUBLIC_FORMSPREE_ENDPOINT: ${{ vars.PUBLIC_FORMSPREE_ENDPOINT }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5

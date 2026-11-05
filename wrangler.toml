@@ -26,3 +26,8 @@ zone_name = "paolocattani.me"
 [[r2_buckets]]
 binding = "BLOG_BUCKET"
 bucket_name = "paolocattani-blog"
+
+# Contact form. Sends only to this verified destination.
+[[send_email]]
+name = "EMAIL"
+destination_address = "paolocattani0501@gmail.com"

@@ -1,7 +1,21 @@
 /// <reference types="astro/client" />
 
+interface ContactEmailMessage {
+  from: { name: string; email: string };
+  to: string;
+  replyTo: { name: string; email: string };
+  subject: string;
+  text: string;
+  html: string;
+}
+
+interface ContactEmailBinding {
+  send(message: ContactEmailMessage): Promise<{ messageId: string }>;
+}
+
 interface Env {
   BLOG_BUCKET?: R2Bucket;
+  EMAIL?: ContactEmailBinding;
 }
 
 interface R2ObjectBody {
